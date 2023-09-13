@@ -6,11 +6,11 @@ import train.booking.ws.AuthenticationStub.Logout;
 
 public class AuthenticationClient
 {
-	public boolean login() throws RemoteException{
+	public boolean login(String username, String password) throws RemoteException{
 		AuthenticationStub hwp = new AuthenticationStub();
 		Login s = new Login();
-		s.setUsername("Moxim");
-		s.setPassword("1234");
+		s.setUsername(username);
+		s.setPassword(password);
 		System.out.print(hwp.login(s).get_return());
 		return true;
 	}
@@ -23,8 +23,7 @@ public class AuthenticationClient
 		return true;
 	}
 	
-	public boolean createAccount() throws RemoteException{
+	public boolean createAccount(String username, String password) throws RemoteException{
 		return false;
 	}
-
 }

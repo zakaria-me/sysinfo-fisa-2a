@@ -21,7 +21,7 @@ public class Main {
 		if(authenticated) {
 			runAuthenticatedAction(choice);
 		}else {
-			runUnauthenticatedAction(choice);
+			runUnauthenticatedAction(choice, scan);
 		}
 	}
 	
@@ -51,21 +51,24 @@ public class Main {
 		}
 	}
 	
-	public static void runUnauthenticatedAction(int action) {
+	public static void runUnauthenticatedAction(int action, Scanner scan) {
 		if(action == 0) {
 			System.out.println("Ciao bye !");
 			System.exit(0);
 		}
 		AuthenticationClient authClient = new AuthenticationClient();
-		if(action == 1) {
-			System.out.println("\t\t1 - Se connecter");
-			try {
-				authClient.login();
-			}catch(RemoteException e){
-				System.out.println("ERROR");
+		System.out.println("\t\tUsername : ");
+		String username = scan.next();
+		System.out.println("\t\tPassword : ");
+		String password = scan.next();
+		try {
+			if(action == 1) {
+				authClient.login(username, password);
+			}else {
+				authClient.createAccount(username, password);
 			}
-		}else {
-			System.out.println("\t\t2 - Créer un compte");
+		}catch(RemoteException e){
+			System.out.println("ERROR");
 		}
 	}
 
