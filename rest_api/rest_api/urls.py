@@ -21,6 +21,7 @@ from idk import views
 
 router = routers.DefaultRouter()
 router.register(r'trains', views.TrainViewSet)
+router.register(r'stations', views.StationViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
