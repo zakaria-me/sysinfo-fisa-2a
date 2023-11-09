@@ -1,0 +1,36 @@
+# Ignore virtual environment
+venv/
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+
+# Ignore settings files with sensitive information
+*.env
+
+# Ignore database files (SQLite, PostgreSQL, etc.)
+*.sqlite3
+*.db
+
+# Ignore media files (uploaded user content)
+media/
+
+# Ignore static files (collected static files in production)
+staticfiles/
+
+# Ignore secret key file (if generated separately)
+*.key
+
+# Ignore logs
+*.log
+
+# Ignore local configuration files (if you have any)
+local_settings.py
+
+# Ignore temporary files and directories
+*.swp
+.DS_Store
+.env.local
+
+# Ignore IDE-specific files and directories
+.idea/
+.vscode/
