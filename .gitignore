@@ -1,5 +1,5 @@
 # Ignore virtual environment
-venv/
+djangoenv/
 # Ignore compiled Python files
 __pycache__/
 *.pyc
