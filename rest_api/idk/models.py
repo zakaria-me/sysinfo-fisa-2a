@@ -1,4 +1,6 @@
+import time
 from django.db import models
+from django.core.validators import MinLengthValidator
 
 # Create your models here.
 class Train(models.Model):
@@ -11,8 +13,10 @@ class Train(models.Model):
     """
     departure_station = models.ForeignKey('Station', on_delete=models.CASCADE, related_name='departure_station', null=True)
     arrival_station = models.ForeignKey('Station', on_delete=models.CASCADE, related_name='arrival_station', null=True)
-    departure_date = models.DateTimeField()
-    arrival_date = models.DateTimeField()
+    departure_date = models.DateField(default=time.strftime("%Y-%m-%d"))
+    departure_time = models.TimeField(null=True)
+    arrival_date = models.DateField(default=time.strftime("%Y-%m-%d"))
+    arrival_time = models.TimeField(null=True)
     seats_number = models.IntegerField()
     first_class_seats = models.IntegerField()
     business_class_seats = models.IntegerField()
@@ -31,7 +35,7 @@ class Station(models.Model):
     """
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=5, validators=[MinLengthValidator(5)], null=True)
 
     def __str__(self):
         return self.name + " (" + self.city + ")"
