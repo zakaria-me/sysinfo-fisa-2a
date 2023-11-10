@@ -12,7 +12,7 @@ from idk.serialiazers import StationSerializer, TrainSerializer
 #   tickets and the travel class (First, Business or Standard) (see the figure below).
 
 
-class StationViewSet(viewsets.ModelViewSet):
+class StationViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
@@ -37,12 +37,13 @@ class StationViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)  # Use pagination for the queryset
 
-        if not queryset.exists():
+        if not page:
             return Response({"detail": "No corresponding stations."}, status=status.HTTP_204_NO_CONTENT)
 
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
 
 
 class TrainViewSet(viewsets.ModelViewSet):
@@ -61,22 +62,30 @@ class TrainViewSet(viewsets.ModelViewSet):
         queryset = super().get_queryset()
 
         filters = [
-            "departure_station", "arrival_station", "departure_date", "arrival_date",
-            "seats_number", "first_class_seats", "business_class_seats", "standard_class_seats"]
+            "departure_date", "arrival_date", "seats_number", "first_class_seats",
+            "business_class_seats", "standard_class_seats"]
         
         for f in filters:
             value = self.request.query_params.get(f)
             if value:
                 queryset = queryset.filter(**{f: value})
                 # queryset = queryset.filter(**{f + "__icontains": value})  # if we want to use contains instead of exact match
+        stations = ["departure_station", "arrival_station"]
+        for s in stations:
+            value = self.request.query_params.get(s)
+            if value:
+                queryset = queryset.filter(**{s + "__name__icontains": value})
+
         return queryset
     
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
 
         if not queryset.exists():
             return Response({"detail": "No available trains."}, status=status.HTTP_204_NO_CONTENT)
 
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
+    

@@ -17,7 +17,6 @@ class Train(models.Model):
     departure_time = models.TimeField(null=True)
     arrival_date = models.DateField(default=time.strftime("%Y-%m-%d"))
     arrival_time = models.TimeField(null=True)
-    seats_number = models.IntegerField()
     first_class_seats = models.IntegerField()
     business_class_seats = models.IntegerField()
     standard_class_seats = models.IntegerField()
