@@ -1,7 +1,0 @@
-# config/packages/security.yaml
-security:
-    firewalls:
-        soap_firewall:
-            pattern: ^/soap/service
-            stateless: true
-            anonymous: true
