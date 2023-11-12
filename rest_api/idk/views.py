@@ -1,5 +1,6 @@
 from rest_framework.response import Response
 from django.shortcuts import render
+from rest_framework.decorators import action
 from rest_framework import viewsets, permissions, status
 
 from idk.models import Station, Train
@@ -46,7 +47,7 @@ class StationViewSet(viewsets.ReadOnlyModelViewSet):
         return self.get_paginated_response(serializer.data)
 
 
-class TrainViewSet(viewsets.ModelViewSet):
+class TrainViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
@@ -89,3 +90,43 @@ class TrainViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(page, many=True)
         return self.get_paginated_response(serializer.data)
     
+    @action(detail=True, methods=['post'])
+    def seats_reservation(self, request, pk=None):
+        """
+        Reserve a seat in a train.
+        """
+        train = self.get_object()
+
+        if train.is_full:
+            return Response({"detail": "No available seats."}, status=status.HTTP_204_NO_CONTENT)
+        
+        seat_type = request.data.get('seat_type')
+        reservation_quantity = request.data.get('quantity')
+        ticket_type = request.data.get('ticket_type')
+
+        if not seat_type:
+            return Response({"detail": "Please specify the seat type."}, status=status.HTTP_400_BAD_REQUEST)
+        if seat_type not in ['first', 'business', 'standard']:
+            return Response({"detail": "Invalid seat type."}, status=status.HTTP_400_BAD_REQUEST)
+        if not reservation_quantity:
+            return Response({"detail": "Please specify the number of seats."}, status=status.HTTP_400_BAD_REQUEST)
+        if not ticket_type:
+            return Response({"detail": "Please specify the ticket type."}, status=status.HTTP_400_BAD_REQUEST)
+        if ticket_type not in ['flexible', 'fixed']:
+            return Response({"detail": "Invalid ticket type."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        seat_group = getattr(train, seat_type + '_class_seats')
+
+        if reservation_quantity > seat_group.quantity - seat_group.reserved:
+            return Response({"detail": "Not enough seats available."}, status=status.HTTP_400_BAD_REQUEST)
+
+        seat_group.reserved += reservation_quantity
+        seat_group.save()
+
+        seat_price = seat_group.flexible_price if ticket_type == 'flexible' else seat_group.fixed_price
+        total_price = seat_price * reservation_quantity
+
+        return Response({
+            "detail": "Reservation successful for train with id {}".format(pk),
+            "total_price": total_price,
+            })

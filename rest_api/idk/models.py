@@ -42,7 +42,7 @@ class Train(models.Model):
 
     @property
     def total_seats_number(self):
-        return self.first_class_seats.seats + self.business_class_seats.seats + self.standard_class_seats.seats
+        return self.first_class_seats.quantity + self.business_class_seats.quantity + self.standard_class_seats.quantity
     
     @property
     def total_reserved_seats(self):

@@ -59,20 +59,20 @@ def populate_train_data(apps, schema_editor):
                 # First
                 qty = random.randint(10, 30)
                 first_class_seats.quantity = qty
-                first_class_seats.flexible_price = fst_price_flex
-                first_class_seats.fixed_price = fst_price_flex * 1.2
+                first_class_seats.flexible_price = round(fst_price_flex, 2)
+                first_class_seats.fixed_price = round(fst_price_flex * 1.2, 2)
                 first_class_seats.reserved = random.randint(0, int(qty * 0.8))  
                 # Business
                 qty = random.randint(30, 70)
                 business_class_seats.quantity = qty
-                business_class_seats.flexible_price = bus_price_flex
-                business_class_seats.fixed_price = bus_price_flex * 1.2
+                business_class_seats.flexible_price = round(bus_price_flex, 2)
+                business_class_seats.fixed_price = round(bus_price_flex * 1.2, 2)
                 business_class_seats.reserved = random.randint(0, int(qty * 0.8))
                 # Standard
                 qty = random.randint(70, 150)
                 standard_class_seats.quantity = qty
-                standard_class_seats.flexible_price = std_price_flex
-                standard_class_seats.fixed_price = std_price_flex * 1.2
+                standard_class_seats.flexible_price = round(std_price_flex, 2)
+                standard_class_seats.fixed_price = round(std_price_flex * 1.2, 2)
                 standard_class_seats.reserved = random.randint(0, int(qty * 0.8))
                 
                 first_class_seats.save()
