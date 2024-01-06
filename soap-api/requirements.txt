@@ -1,0 +1,6 @@
+spyne
+lxml
+zeep
+pandas
+requests
+flask

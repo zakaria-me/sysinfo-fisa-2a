@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SOAP Client Interface</title>
+  </head>
+  <h2>Token:</h2>
+  <p>{{ soap_response }}</p>
+
+  <form action="/train_search" method="post">
+    <label for="token">Token:</label><br>
+    <input type="text" id="token" name="token" value="{{soap_response}}" readonly><br>
+    <labelt for="GareDepart">Gare de départ:</label><br>
+    <input type="text" id="GareDepart" name="GareDepart"><br>
+    <labelt for="GareArrivee">Gare d'arrivée:</label><br>
+    <input type="text" id="GareArrivee" name="GareArrivee"><br>
+    <labelt for="DateDepart">Date de départ:</label><br>
+    <input type="text" id="DateDepart" name="DateDepart"><br>
+    <labelt for="DateArrivee">Date d'arrivée:</label><br>
+    <input type="text" id="DateArrivee" name="DateArrivee"><br>
+    <label for="NombreTickets">Nombre de tickets:</label><br>
+    <input type="text" id="NombreTickets" name="NombreTickets"><br>
+    <label for="Classe">Classe:</label><br>
+    <select id="Classe" name="Classe"><br>
+      <option value="PlacesStandard">Standard</option>
+      <option value="PlacesFirst">First</option>
+      <option value="PlacesPremium">Premium</option>
+    </select><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  {% if trains %}
+    <h2>Trains disponibles:</h2>
+  <ul>
+    {% for train in trains %}
+      <li>{{ train }}</li>
+    {% endfor %}
+  </ul>
+
+  <form action="/book_train" method="post">
+    <label for="token">Token:</label><br>
+    <input type="text" id="token" name="token" value="{{soap_response}}" readonly><br>
+
+    <label for="train">Train:</label><br>
+    <input type="text" id="train" name="train"><br>
+
+    <select id="Classe" name="Classe"><br>
+      <option value="PlacesStandard">Standard</option>
+      <option value="PlacesFirst">First</option>
+      <option value="PlacesPremium">Premium</option>
+    </select><br>
+
+    <label for="TypeTicket" name="TypeTicket">Type de ticket:</label><br>
+    <select id="TypeTicket" name="TypeTicket"><br>
+      <option value="Flexible">Flexible</option>
+      <option value="NotFlexible">NotFlexible</option>
+    </select><br>
+
+    <input type="submit" value="Submit">
+  </form>
+  {% endif %}
+
+  {% if booked %}
+    <h2>Train réservé:</h2>
+    <p>{{ booked }}</p>
+  {% endif %}
+
+  {% if error %}
+    <h2>Erreur:</h2>
+    <p>{{ error }}</p>
+  {% endif %}
+</html>
