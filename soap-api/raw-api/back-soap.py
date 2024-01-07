@@ -28,6 +28,7 @@ class SOAPServer(BaseHTTPRequestHandler):
                 response_value = self.handle_method(method_name, parameters, root)
 
                 if response_value == "Unauthorized":
+                    # TODO: Send SOAP error: the body contains a FAULT element
                     self.send_error(401, "Unauthorized")
                     return
 
