@@ -111,7 +111,7 @@ class SOAPServer(BaseHTTPRequestHandler):
         self.wfile.write(soap_response.encode())
 
 if __name__ == '__main__':
-    server_address = ('', 8000)
+    server_address = ('', 8001)
     httpd = HTTPServer(server_address, SOAPServer)
     print("SOAP server running on port 8000")
     httpd.serve_forever()
