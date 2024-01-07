@@ -19,7 +19,6 @@ class StationViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Station.objects.all().order_by('name')
     serializer_class = StationSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         """
@@ -53,7 +52,6 @@ class TrainViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Train.objects.all().order_by('departure_date')
     serializer_class = TrainSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
 
     def get_queryset(self):
