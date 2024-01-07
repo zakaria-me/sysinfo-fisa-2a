@@ -13,17 +13,18 @@
     <input type="text" id="GareDepart" name="GareDepart"><br>
     <labelt for="GareArrivee">Gare d'arrivée:</label><br>
     <input type="text" id="GareArrivee" name="GareArrivee"><br>
-    <labelt for="DateDepart">Date de départ:</label><br>
+    <labelt for="DateDepart">Date de départ: (YYYY-MM-DD)</label><br>
     <input type="text" id="DateDepart" name="DateDepart"><br>
-    <labelt for="DateArrivee">Date d'arrivée:</label><br>
+    <labelt for="DateArrivee">Date d'arrivée:(YYYY-MM-DD)</label><br>
     <input type="text" id="DateArrivee" name="DateArrivee"><br>
     <label for="NombreTickets">Nombre de tickets:</label><br>
     <input type="text" id="NombreTickets" name="NombreTickets"><br>
     <label for="Classe">Classe:</label><br>
     <select id="Classe" name="Classe"><br>
-      <option value="PlacesStandard">Standard</option>
-      <option value="PlacesFirst">First</option>
-      <option value="PlacesPremium">Premium</option>
+      <option value="Standard">Standard</option>
+      <option value="First">First</option>
+      <option value="Business">Business</option>
+      <option value="NoPreference">Sans Preference</option>
     </select><br>
 
     <input type="submit" value="Submit">
@@ -33,21 +34,61 @@
     <h2>Trains disponibles:</h2>
   <ul>
     {% for train in trains %}
-      <li>{{ train }}</li>
+      <li>
+        <ul>
+          <li>Train ID: {{ train.id }}</li>
+          <li>Departure: {{ train.departure_station.name }}</li>
+          <li>Arrival: {{ train.arrival_station.name }}</li>
+          <li>Departure Date: {{ train.departure_date }}</li>
+          <li>Departure Time: {{ train.departure_time }}</li>
+          <li>Arrival Date: {{ train.arrival_date }}</li>
+          <li>Arrival Time: {{ train.arrival_time }}</li>
+          <li>First class seats (Total/Reserved): {{ train.first_class_seats.quantity }}/{{train.first_class_seats.reserved}}</li>
+          <li>First class seats price (Fixed/Flexible): {{ train.first_class_seats.fixed_price }}/{{train.first_class_seats.flexible_price}}</li>
+          <li>Business class seats (Total/Reserved): {{ train.business_class_seats.quantity }}/{{train.business_class_seats.reserved}}</li>
+          <li>Business class seats price (Fixed/Flexible): {{ train.business_class_seats.fixed_price }}/{{train.business_class_seats.flexible_price}}</li>
+          <li>Standard class seats (Total/Reserved): {{ train.standard_class_seats.quantity }}/{{train.standard_class_seats.reserved}}</li>
+          <li>Standard class seats price (Fixed/Flexible): {{ train.standard_class_seats.fixed_price }}/{{train.standard_class_seats.flexible_price}}</li>
+        </ul>
+      </li>
     {% endfor %}
   </ul>
 
-  <form action="/book_train" method="post">
+  <h2>Choisissez un train:</h2>
+  <form action="/train_booking" method="post">
     <label for="token">Token:</label><br>
     <input type="text" id="token" name="token" value="{{soap_response}}" readonly><br>
 
-    <label for="train">Train:</label><br>
-    <input type="text" id="train" name="train"><br>
+    <label for="typeTravel" name="typeTravel">Type de voyage:</label><br>
+    <select id="typeTravel" name="typeTravel"><br>
+      <option value="oneWay">OneWay</option>
+      <option value="roundTrip">RoundTrip</option>
+    </select><br>
 
+    <label for="trainAway">Train away trip: </label><br>
+    <select id="trainAway" name="trainAway" ><br>
+      {% if trains_ids %}
+        {% for train_id in trains_ids %}
+          <option value="{{ train_id }}">{{ train_id }}</option>
+        {% endfor %}
+      {% endif %}
+    </select><br>
+
+    <label for="trainRound">Train round trip: </label><br>
+    <select id="trainRound" name="trainRound"><br>
+      {% if trains_ids %}
+        {% for train_id in trains_ids %}
+          <option value="{{ train_id }}">{{ train_id }}</option>
+        {% endfor %}
+      {% endif %}
+    </select><br>
+
+
+    <label for="Classe">Classe:</label><br>
     <select id="Classe" name="Classe"><br>
-      <option value="PlacesStandard">Standard</option>
-      <option value="PlacesFirst">First</option>
-      <option value="PlacesPremium">Premium</option>
+      <option value="Standard">Standard</option>
+      <option value="First">First</option>
+      <option value="Business">Business</option>
     </select><br>
 
     <label for="TypeTicket" name="TypeTicket">Type de ticket:</label><br>
@@ -55,6 +96,9 @@
       <option value="Flexible">Flexible</option>
       <option value="NotFlexible">NotFlexible</option>
     </select><br>
+
+    <label for="NombreTickets">Nombre de tickets:</label><br>
+    <input type="text" id="NombreTickets" name="NombreTickets"><br>
 
     <input type="submit" value="Submit">
   </form>
@@ -69,4 +113,19 @@
     <h2>Erreur:</h2>
     <p>{{ error }}</p>
   {% endif %}
+
+
+  <script>
+    // // NombreTickets must be filled if a Classe is selected
+    // document.getElementById("Classe").addEventListener("change", function() {
+    //   if (document.getElementById("Classe").value != "Standard") {
+    //     document.getElementById("NombreTickets").value = 1;
+    //     document.getElementById("NombreTickets").readOnly = true;
+    //   } else {
+    //     document.getElementById("NombreTickets").value = "";
+    //     document.getElementById("NombreTickets").readOnly = false;
+    //   }
+    // });
+
+  </script>
 </html>

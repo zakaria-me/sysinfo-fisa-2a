@@ -4,7 +4,7 @@
     <title>SOAP Client Interface</title>
 </head>
 <body>
-    <h2>SOAP Client Request Form</h2>
+    <h2>SOAP Client Login Form</h2>
     <form action="/login" method="post">
         <label for="username">Username:</label><br>
         <input type="text" id="username" name="username"><br>
@@ -12,5 +12,18 @@
         <input type="password" id="password" name="password"><br><br>
         <input type="submit" value="Submit">
     </form>
+    <br>
+    <h2>SOAP Client SignUp Form</h2>
+    <form action="/create_user" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
 </body>
 </html>
