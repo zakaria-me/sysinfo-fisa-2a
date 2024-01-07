@@ -12,6 +12,12 @@ from idk.serialiazers import StationSerializer, TrainSerializer
 #   trains based on departure and arrival stations, outbound and return dates and time, number of
 #   tickets and the travel class (First, Business or Standard) (see the figure below).
 
+class UnrestrictedPermission(permissions.BasePermission):
+    """
+    Allow unrestricted access.
+    """
+    def has_permission(self, request, view):
+        return True  # Allow any request
 
 class StationViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -19,6 +25,7 @@ class StationViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Station.objects.all().order_by('name')
     serializer_class = StationSerializer
+    permission_classes = [UnrestrictedPermission]
 
     def get_queryset(self):
         """
@@ -52,6 +59,7 @@ class TrainViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Train.objects.all().order_by('departure_date')
     serializer_class = TrainSerializer
+    permission_classes = [UnrestrictedPermission]
 
 
     def get_queryset(self):
