@@ -51,8 +51,6 @@ def train_search_ws():
     NombreTicket = request.form['NombreTickets']
     Classe = request.form['Classe']
 
-    # TODO: Test for seats and number of tickets
-    # TODO: parse more data to display in the template
     try:
         response = client.service.train_search(token, GareDepart, GareArrivee, DateDepart, DateArrivee, NombreTicket, Classe)
     except exceptions.Fault as fault:

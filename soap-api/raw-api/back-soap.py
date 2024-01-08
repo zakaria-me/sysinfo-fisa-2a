@@ -6,7 +6,6 @@ import requests
 
 
 # TODO: Put token and user database in a database
-# TODO: Add a method to create a user
 TOKENS = {}
 # TODO: delete absolute path
 # USERS_DATABASE = pd.read_csv('/home/zakaria/Documents/scolaire/ensiie/2A/architecture-systemes-info/sysinfo_auto_ws_project/database/train_booking_ws/user_table.csv')
@@ -32,7 +31,6 @@ class SOAPServer(BaseHTTPRequestHandler):
                 response_value = self.handle_method(method_name, parameters, root)
 
                 if response_value == "Unauthorized":
-                    # TODO: Send SOAP error: the body contains a FAULT element
                     self.send_error(401, "Unauthorized")
                     return
 
