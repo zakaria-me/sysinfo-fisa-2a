@@ -42,3 +42,24 @@ Terminal 3:
 ```bash
 python soap-api/raw-api/front-client.py
 ```
+
+# Self-evaluation
+## 	Requirements 	                                                                Marks (30)
+1 	Create REST Train Filtering service B 	                                            6/6
+
+2 	Create SOAP Train Booking service A 	                                            4/4
+
+3 	Interaction between two services 	                                                4/4
+
+4 	Test with Web service Client (instead of using Eclipse's Web service Explorer)  	2/2
+
+5 	Work with complex data type (class, table, etc.) 	                                1/2
+
+6 	Work with database (in text file, xml, in mysql, etc.) 	                            2/2
+
+7 	Postman 	                                                                        2/2
+
+8 	OpenAPI 	                                                                        3/3
+
+9 	BPMS 	                                                                            0/5
+
