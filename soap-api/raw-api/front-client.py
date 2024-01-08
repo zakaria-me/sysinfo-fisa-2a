@@ -21,12 +21,10 @@ def login():
     username = request.form['username']
     password = request.form['password']
 
-    soap_response = client.service.login(username, password)
-
-    # Prepare and send the SOAP request
-    # soap_response = get_token(username, password)
-    # soap_response = soap_response.decode('utf-8').split('<Response>')[1].split('</Response>')[0]
-    
+    try:
+        soap_response = client.service.login(username, password)
+    except exceptions.Fault as fault:
+        return render_template('index.html', message=fault.message) 
 
     return render_template('train_search.html', soap_response=soap_response) 
 
@@ -46,8 +44,6 @@ def train_search_ws():
     GareArrivee = request.form['GareArrivee']
     DateDepart = request.form['DateDepart']
     DateArrivee = request.form['DateArrivee']
-    # HeureDepart = request.form['HeureDepart']
-    # HeureArrivee = request.form['HeureArrivee']
     NombreTicket = request.form['NombreTickets']
     Classe = request.form['Classe']
 
@@ -55,7 +51,6 @@ def train_search_ws():
         response = client.service.train_search(token, GareDepart, GareArrivee, DateDepart, DateArrivee, NombreTicket, Classe)
     except exceptions.Fault as fault:
         return fault.message
-    print(response)
     response = json.loads(response)
     trains = response['results'] 
     trains_ids = [train['id'] for train in trains]
@@ -79,56 +74,7 @@ def train_booking_ws():
     except exceptions.Fault as fault:
         return fault.message
 
-    # print(r)
-
-    # print(r.status_code)
-
-    # if r.status_code != 200:
-    #     return r.text
-
-    # if r != "Successful reservation":
-    #     return render_template('train_search.html', soap_response=token, error=r)
-    
     return render_template('train_search.html', soap_response=token, booked=r)
-
-    # if typeTravel == 'oneWay' and trainAway is None:
-    #     return render_template('train_search.html', soap_response=token, error='Missing trainAway Id')
-    # if typeTravel == 'roundTrip' and (trainAway is None or trainRound is None):
-    #     return render_template('train_search.html', soap_response=token, error='Missing trainAway or trainRound Id')
-
-    # for key, value in request.form.items():
-    #     print(key, value)
-
-    # if typeTravel == 'oneWay':
-    #     trainId = trainAway
-    #     response = train_booking(token, trainId, Classe, TypeTicket, NombreTicket)
-    #     response = response.decode('utf-8').split('<Response>')[2].split('</Response>')[0]
-    #     if response != "Successful reservation":
-    #         return render_template('train_search.html', soap_response=token, error=response)
-        
-    #     return render_template('train_search.html', soap_response=token, success=response)
-    
-    # elif typeTravel == 'roundTrip':
-    #     trainId = trainAway
-    #     response = train_booking(token, trainId, Classe, TypeTicket, NombreTicket)
-    #     response = response.decode('utf-8').split('<Response>')[2].split('</Response>')[0]
-    #     if response != "Successful reservation":
-    #         return render_template('train_search.html', soap_response=token, error=response)
-        
-    #     trainId = trainRound
-    #     response = train_booking(token, trainId, Classe, TypeTicket, NombreTicket)
-    #     response = response.decode('utf-8').split('<Response>')[2].split('</Response>')[0]
-    #     if response != "Successful reservation":
-    #         return render_template('train_search.html', soap_response=token, error=response)
-        
-    #     return render_template('train_search.html', soap_response=token, success=response)
-
-
-    # # response = train_booking(token, trainId, Classe, TypeTicket) 
-    # # response = response.decode('utf-8').split('<Response>')[2].split('</Response>')[0]
-
-    # return render_template('train_search.html', soap_response=token) 
-
 
 def get_token(username, password):
     url = "http://localhost:8004/"

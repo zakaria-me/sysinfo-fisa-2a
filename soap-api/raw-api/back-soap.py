@@ -25,7 +25,7 @@ class LoginService(ServiceBase):
             TOKENS[token] = username 
             return token 
         else:
-            return "Invalid username or password"
+            raise Fault(faultcode="Unauthorized", faultstring="Invalid username or password") 
 
 class CreateUserService(ServiceBase):
     @rpc(Unicode, Unicode, _returns=Unicode)
@@ -43,14 +43,8 @@ class TrainSearchService(ServiceBase):
     @rpc(Unicode, Unicode, Unicode, Unicode, Unicode, Unicode, Unicode, _returns=Unicode)
     def train_search(ctx,token, GareDepart, GareArrivee, DateDepart, DateArrivee, NombreTicket, Classe):
         if not is_authenticated(token):
-            return "Unauthorized"
+            raise Fault(faultcode="Unauthorized", faultstring="Invalid token")
 
-        parameters_translator = {
-            'GareDepart': 'departure_station',
-            'GareArrivee': 'arrival_station',
-            'DateDepart': 'departure_date',
-            'DateArrivee': 'arrival_date',
-        }
         data = {}
 
         if GareDepart is not None:
@@ -81,9 +75,7 @@ class TrainSearchService(ServiceBase):
         if r.status_code != 200:
             if r.status_code == 204:
                 raise Fault(faultcode="InternalServerError", faultstring="No available trains")
-            if r.status_code != 200:
-                raise Fault(faultcode="InternalServerError", faultstring=r.text)
-            return "No available trains"
+            raise Fault(faultcode="InternalServerError", faultstring=r.text)
         else:
             return r.content
 
@@ -91,7 +83,7 @@ class TrainBookingService(ServiceBase):
     @rpc(Unicode, Unicode, Unicode, Unicode, Unicode, Unicode, Unicode, _returns=Unicode)
     def train_booking(ctx, token, typeTravel, trainAway, trainRound, Classe, TypeTicket, NombreTicket):
         if not is_authenticated(token):
-            return "Unauthorized"
+            raise Fault(faultcode="Unauthorized", faultstring="Invalid token")
         
         print(typeTravel, trainAway, trainRound, Classe, TypeTicket, NombreTicket)
         if typeTravel == 'oneWay' and trainAway is None:
