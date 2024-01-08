@@ -10,7 +10,7 @@ import requests
 TOKENS = {}
 # TODO: delete absolute path
 # USERS_DATABASE = pd.read_csv('/home/zakaria/Documents/scolaire/ensiie/2A/architecture-systemes-info/sysinfo_auto_ws_project/database/train_booking_ws/user_table.csv')
-USERS_DATABASE_PATH = '/home/zakaria/Documents/scolaire/ensiie/2A/architecture-systemes-info/sysinfo_auto_ws_project/database/train_booking_ws/user_table.csv' 
+USERS_DATABASE_PATH = r'C:\Users\9609024S\Documents\tuto-bac-a-sable\sysinfo_auto_ws_project\database\train_booking_ws\user_table.csv' 
 
 class SOAPServer(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -243,6 +243,9 @@ class TrainSearchService(ServiceBase):
         r = requests.get('http://127.0.0.1:8000/trains/', params=data)
 
         if r.status_code != 200:
+            print(r.status_code)
+            if r.status_code == 204:
+                raise Fault(faultcode="InternalServerError", faultstring="No available trains")
             return "No available trains"
         else:
             return r.content

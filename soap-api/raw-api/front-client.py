@@ -53,7 +53,11 @@ def train_search_ws():
 
     # TODO: Test for seats and number of tickets
     # TODO: parse more data to display in the template
-    response = client.service.train_search(token, GareDepart, GareArrivee, DateDepart, DateArrivee, NombreTicket, Classe)
+    try:
+        response = client.service.train_search(token, GareDepart, GareArrivee, DateDepart, DateArrivee, NombreTicket, Classe)
+    except exceptions.Fault as fault:
+        return fault.message
+    print(response)
     response = json.loads(response)
     trains = response['results'] 
     trains_ids = [train['id'] for train in trains]
