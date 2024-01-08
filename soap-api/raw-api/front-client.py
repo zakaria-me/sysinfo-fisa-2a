@@ -2,7 +2,7 @@ from flask import Flask, request, render_template_string, redirect, url_for, ren
 import requests
 import json
 
-from zeep import Client
+from zeep import Client, exceptions
 
 
 WSDL_URL = 'http://localhost:8009/?wsdl'
@@ -72,12 +72,20 @@ def train_booking_ws():
     TypeTicket = request.form['TypeTicket']
     NombreTicket = request.form['NombreTickets']
 
-    r = client.service.train_booking(token, typeTravel, trainAway, trainRound, Classe, TypeTicket, NombreTicket)
+    try:
+        r = client.service.train_booking(token, typeTravel, trainAway, trainRound, Classe, TypeTicket, NombreTicket)
+    except exceptions.Fault as fault:
+        return fault.message
 
-    print(r)
+    # print(r)
 
-    if r != "Successful reservation":
-        return render_template('train_search.html', soap_response=token, error=r)
+    # print(r.status_code)
+
+    # if r.status_code != 200:
+    #     return r.text
+
+    # if r != "Successful reservation":
+    #     return render_template('train_search.html', soap_response=token, error=r)
     
     return render_template('train_search.html', soap_response=token, booked=r)
 

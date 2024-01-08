@@ -176,7 +176,7 @@ class SOAPServer(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(soap_response.encode())
 
-from spyne import Application, rpc, ServiceBase, Integer, Unicode
+from spyne import Application, rpc, ServiceBase, Integer, Unicode, Fault
 from spyne.protocol.soap import Soap11
 from spyne.server.wsgi import WsgiApplication
 
@@ -275,12 +275,15 @@ class TrainBookingService(ServiceBase):
                 data['ticket_type'] = 'flexible'
 
         if NombreTicket is not None:
-            data['quantity'] = NombreTicket
+            data['quantity'] = 3 
 
         if typeTravel == 'oneWay':
             r = requests.post(f'http://127.0.0.1:8000/trains/{trainAway}/seats_reservation/',data=data)
-            print(data)
-            print(r.content)
+            print("data " + str(data))
+            # print("Response : ", r.status_code)
+            if r.status_code != 200:
+                raise Fault(faultcode="InternalServerError", faultstring=r.text)
+            return r.text
             if not r.content :
                 return f"Reservation error on the train {trainAway} is not avaialble"
             return "Successful reservation"
