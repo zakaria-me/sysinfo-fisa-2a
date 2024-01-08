@@ -1,5 +1,6 @@
 # Ignore virtual environment
 djangoenv/
+wsproject/
 # Ignore compiled Python files
 __pycache__/
 *.pyc

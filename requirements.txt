@@ -1,0 +1,8 @@
+spyne
+lxml
+zeep
+pandas
+requests
+flask
+djangorestframework
+django
