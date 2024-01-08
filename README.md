@@ -63,3 +63,146 @@ python soap-api/raw-api/front-client.py
 
 9 	BPMS 	                                                                            0/5
 
+
+# Test de l'API SOAP avec POSTMAN
+
+
+## Create user 
+
+L'API demande une authentification pour chaque appel. Nous avons besoin d'un utilisateur qui puisse ensuite demander un token.
+
+Dans Postman, dans l'onglet 'Headers', on ajoute un paramètre 'Content-type = text/xml".  Dans l'onglet 'Body', on coche 'raw' et le format 'XML'. Puis, on remplit le body:
+
+### Appel
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+<soap-env:Body>
+    <ns0:create_user xmlns:ns0="train_webservice">
+        <ns0:username>username</ns0:username>
+        <ns0:password>password</ns0:password>
+        </ns0:create_user></soap-env:Body>
+        </soap-env:Envelope>
+```
+
+### Reponse si aucune erreur
+
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<soap11env:Envelope xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="train_webservice">
+    <soap11env:Body>
+        <tns:create_userResponse>
+            <tns:create_userResult>User created</tns:create_userResult>
+        </tns:create_userResponse>
+    </soap11env:Body>
+</soap11env:Envelope>
+```
+
+## Login
+
+L'API demande un token pour chaque appel à l'API. Il faut se connecter pour en récupérer un.
+
+Dans Postman, dans l'onglet 'Headers', on ajoute un paramètre 'Content-type = text/xml".  Dans l'onglet 'Body', on coche 'raw' et le format 'XML'. Puis, on remplit le body:
+
+### Appel
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<soap-env:Envelope 
+xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+<soap-env:Body>
+<ns0:login xmlns:ns0="train_webservice">
+<ns0:username>Mellah</ns0:username>
+<ns0:password>1234</ns0:password>
+</ns0:login>
+</soap-env:Body>
+</soap-env:Envelope>
+```
+
+### Reponse si aucune erreur
+
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<soap11env:Envelope xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="train_webservice">
+    <soap11env:Body>
+        <tns:loginResponse>
+            <tns:loginResult>token</tns:loginResult>
+        </tns:loginResponse>
+    </soap11env:Body>
+</soap11env:Envelope>
+```
+
+## Train Search 
+
+Pour faire une recherche de Train disponible
+
+Dans Postman, dans l'onglet 'Headers', on ajoute un paramètre 'Content-type = text/xml".  Dans l'onglet 'Body', on coche 'raw' et le format 'XML'. Puis, on remplit le body:
+
+### Appel
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+<soap-env:Body>
+    <ns0:train_search xmlns:ns0="train_webservice">
+        <ns0:token>token</ns0:token>
+        <ns0:GareDepart></ns0:GareDepart>
+        <ns0:GareArrivee></ns0:GareArrivee>
+        <ns0:DateDepart></ns0:DateDepart>
+        <ns0:DateArrivee></ns0:DateArrivee>
+        <ns0:NombreTicket></ns0:NombreTicket>
+        <ns0:Classe> </ns0:Classe>
+    </ns0:train_search>
+    </soap-env:Body>
+</soap-env:Envelope>
+```
+
+### Reponse si aucune erreur
+
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<soap11env:Envelope xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="train_webservice">
+    <soap11env:Body>
+        <tns:train_searchResponse>
+            <tns:train_searchResult>data_en_format_json</tns:train_searchResult>
+        </tns:train_searchResponse>
+    </soap11env:Body>
+</soap11env:Envelope>
+```
+
+## Train Booking 
+
+Pour faire une recherche de Train disponible
+
+Dans Postman, dans l'onglet 'Headers', on ajoute un paramètre 'Content-type = text/xml".  Dans l'onglet 'Body', on coche 'raw' et le format 'XML'. Puis, on remplit le body:
+
+### Appel
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+<soap-env:Body><ns0:train_booking xmlns:ns0="train_webservice">
+    <ns0:token>token</ns0:token>
+    <ns0:typeTravel>oneWay/roundTrip</ns0:typeTravel>
+    <ns0:trainAway>5269</ns0:trainAway>
+    <ns0:Classe>Standard</ns0:Classe>
+    <ns0:TypeTicket>flexible</ns0:TypeTicket>
+    <ns0:NombreTicket>4</ns0:NombreTicket>
+    </ns0:train_booking>
+    </soap-env:Body>
+</soap-env:Envelope>
+```
+
+### Reponse si aucune erreur
+
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<soap11env:Envelope xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="train_webservice">
+    <soap11env:Body>
+        <tns:train_bookingResponse>
+            <tns:train_bookingResult>Successful reservation</tns:train_bookingResult>
+        </tns:train_bookingResponse>
+    </soap11env:Body>
+</soap11env:Envelope>
+```

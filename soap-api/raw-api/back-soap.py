@@ -87,11 +87,11 @@ class TrainBookingService(ServiceBase):
         
         print(typeTravel, trainAway, trainRound, Classe, TypeTicket, NombreTicket)
         if typeTravel == 'oneWay' and trainAway is None:
-            return "Missing trainAway Id"
+            raise Fault(faultcode="InternalServerError", faultstring="Missing trainAway Id")
         if typeTravel == 'roundTrip' and (trainAway is None or trainRound is None):
-            return "Missing trainAway or trainRound Id"
+            raise Fault(faultcode="InternalServerError", faultstring="Missing trainAway or trainRound Id")
         if typeTravel == 'roundTrip' and (trainAway == trainRound):
-            return "Same train Ids"
+            raise Fault(faultcode="InternalServerError", faultstring="Same train Ids")
 
         data = {}
         if Classe is not None:
@@ -101,13 +101,19 @@ class TrainBookingService(ServiceBase):
                 data['seat_type'] = 'first' 
             elif Classe == 'Business':
                 data['seat_type'] = 'business' 
+        else:
+            raise Fault(faultcode="InternalServerError", faultstring="Missing Classe")
 
         if TypeTicket is not None:
             if TypeTicket == 'flexible':
                 data['ticket_type'] = 'flexible'
+        else:
+            raise Fault(faultcode="InternalServerError", faultstring="Missing TypeTicket")
 
         if NombreTicket is not None:
             data['quantity'] = int(NombreTicket) 
+        else:
+            raise Fault(faultcode="InternalServerError", faultstring="Missing NombreTicket")
 
         if typeTravel == 'oneWay':
             r = requests.post(f'http://127.0.0.1:8000/trains/{trainAway}/seats_reservation/',data=data)
