@@ -1,21 +1,16 @@
 openapi: 3.0.0
 servers:
-  # Added by API Auto Mocking Plugin
+# Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/MDCCARDINALE/REST/2.0.0
+    url: https://virtserver.swaggerhub.com/MDCCARDINALE/REST/2.0.2
+  - description: Default local API URL
+    url: http://127.0.0.1:8000/
 info:
-  description: This is a simple API
-  version: 2.0.0
-  title: Simple Train reservation API
+  description: This documentation is meant for external uses.
+  version: 2.0.2
+  title: Simple API to consult trains and make ticket reservation.
   contact:
     email: maxime.cardinale@ensiie.fr
-tags:
-  - name: train
-    description: Everything about your Trains
-  - name: user
-    description: Operations about user
-  - name: reservation
-    description: Operations about reservation
 
 paths:
 
