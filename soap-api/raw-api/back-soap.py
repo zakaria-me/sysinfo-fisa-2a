@@ -30,8 +30,10 @@ class LoginService(ServiceBase):
 class CreateUserService(ServiceBase):
     @rpc(Unicode, Unicode, _returns=Unicode)
     def create_user(ctx, username, password):
-        if is_valid_user(username, password):
-            return "User already exists"
+        users_database = pd.read_csv(USERS_DATABASE_PATH)
+        for i, (index,row) in enumerate(users_database.iterrows()):
+            if str(row['NomUtilisateur']) == str(username):
+                return "User already exists"
         else:
             # add user to the USERS_DATABASE pandas dataframe
             users_database = pd.read_csv(USERS_DATABASE_PATH)
