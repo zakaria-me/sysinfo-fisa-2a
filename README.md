@@ -54,6 +54,7 @@ python soap-api/raw-api/front-client.py
 - The SOAP API is available at 127.0.0.1:8009 and its WSDL at 127.0.0.1:8009/?wsdl
 - The REST API is available at 127.0.0.1:8000
 - The web client is available at 127.0.0.1:5000
+- You can alos find the WSDL of the SOAP service in this repo at soap-api/wsdl.xml
 
 # Self-evaluation
 ## 	Requirements 	                                                                Marks (30)
