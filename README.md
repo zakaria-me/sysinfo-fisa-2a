@@ -25,7 +25,13 @@ Install the necessary librairies:
 pip install -r requirements.txt
 ```
 
-In 3 seperate terminals:
+## In one terminal (limited output)
+
+```bash
+bash launch.sh
+```
+
+## In 3 seperate terminals:
 
 Terminal 1:
 ```bash
@@ -42,6 +48,12 @@ Terminal 3:
 ```bash
 python soap-api/raw-api/front-client.py
 ```
+
+### Description of the services
+
+- The SOAP API is available at 127.0.0.1:8009 and its WSDL at 127.0.0.1:8009/?wsdl
+- The REST API is available at 127.0.0.1:8000
+- The web client is available at 127.0.0.1:5000
 
 # Self-evaluation
 ## 	Requirements 	                                                                Marks (30)
@@ -63,6 +75,9 @@ python soap-api/raw-api/front-client.py
 
 9 	BPMS 	                                                                            0/5
 
+# Documentation de l'API
+
+Le lien vers la documentation de l'API (réalisée avec Swagger) est disponible à ce lien https://app.swaggerhub.com/apis-docs/MDCCARDINALE/REST/2.0.0
 
 # Test de l'API SOAP avec POSTMAN
 
