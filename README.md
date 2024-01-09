@@ -1,92 +1,224 @@
-# SYSINFO_AUTO_WS_PROJECT
+# Student names
 
-## TEST
+- Maxime CARDINALE
+- Zakaria MELLAH
 
-## Getting started
+# How to run the services
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+In a linux environment, place yourself at the root of the this folder (where this README lies).
+The project contains three services:
+- A REST API implemented with django
+- A SOAP API implemented with spyne
+- A Web Client written in flask
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Note: the project uses the ports 8009, 8000 and 5000
+Make sure they are available.
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+Initialize a virtual environement:
+```bash
+python -m venv wsproject/
+source wsproject/bin/activate
 ```
-cd existing_repo
-git remote add origin https://gitlab.pedago.ensiie.fr/maxime.cardinale/sysinfo_auto_ws_project.git
-git branch -M main
-git push -uf origin main
+
+Install the necessary librairies:
+```bash
+pip install -r requirements.txt
 ```
 
-## Integrate with your tools
+## In one terminal (limited output)
 
-- [ ] [Set up project integrations](https://gitlab.pedago.ensiie.fr/maxime.cardinale/sysinfo_auto_ws_project/-/settings/integrations)
+```bash
+bash launch.sh
+```
 
-## Collaborate with your team
+## In 3 seperate terminals:
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+Terminal 1:
+```bash
+python rest_api/manage.py migrate
+python rest_api/manage.py runserver 
+```
 
-## Test and Deploy
+Terminal 2:
+```bash
+python soap-api/raw-api/back-soap.py
+```
 
-Use the built-in continuous integration in GitLab.
+Terminal 3:
+```bash
+python soap-api/raw-api/front-client.py
+```
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### Description of the services
 
-***
+- The SOAP API is available at 127.0.0.1:8009 and its WSDL at 127.0.0.1:8009/?wsdl
+- The REST API is available at 127.0.0.1:8000
+- The web client is available at 127.0.0.1:5000
+- You can alos find the WSDL of the SOAP service in this repo at soap-api/wsdl.xml
 
-# Editing this README
+# Self-evaluation
+## 	Requirements 	                                                                Marks (30)
+1 	Create REST Train Filtering service B 	                                            6/6
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+2 	Create SOAP Train Booking service A 	                                            4/4
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+3 	Interaction between two services 	                                                4/4
 
-## Name
-Choose a self-explaining name for your project.
+4 	Test with Web service Client (instead of using Eclipse's Web service Explorer)  	2/2
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+5 	Work with complex data type (class, table, etc.) 	                                1/2
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+6 	Work with database (in text file, xml, in mysql, etc.) 	                            2/2
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+7 	Postman 	                                                                        2/2
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+8 	OpenAPI 	                                                                        3/3
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+9 	BPMS 	                                                                            0/5
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+# Documentation de l'API
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Le lien vers la documentation de l'API (réalisée avec Swagger) est disponible à ce lien https://app.swaggerhub.com/apis-docs/MDCCARDINALE/REST/2.0.0
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+# Test de l'API SOAP avec POSTMAN
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## Create user 
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+L'API demande une authentification pour chaque appel. Nous avons besoin d'un utilisateur qui puisse ensuite demander un token.
 
-## License
-For open source projects, say how it is licensed.
+Dans Postman, dans l'onglet 'Headers', on ajoute un paramètre 'Content-type = text/xml".  Dans l'onglet 'Body', on coche 'raw' et le format 'XML'. Puis, on remplit le body:
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### Appel
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+<soap-env:Body>
+    <ns0:create_user xmlns:ns0="train_webservice">
+        <ns0:username>username</ns0:username>
+        <ns0:password>password</ns0:password>
+        </ns0:create_user></soap-env:Body>
+        </soap-env:Envelope>
+```
+
+### Reponse si aucune erreur
+
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<soap11env:Envelope xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="train_webservice">
+    <soap11env:Body>
+        <tns:create_userResponse>
+            <tns:create_userResult>User created</tns:create_userResult>
+        </tns:create_userResponse>
+    </soap11env:Body>
+</soap11env:Envelope>
+```
+
+## Login
+
+L'API demande un token pour chaque appel à l'API. Il faut se connecter pour en récupérer un.
+
+Dans Postman, dans l'onglet 'Headers', on ajoute un paramètre 'Content-type = text/xml".  Dans l'onglet 'Body', on coche 'raw' et le format 'XML'. Puis, on remplit le body:
+
+### Appel
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<soap-env:Envelope 
+xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+<soap-env:Body>
+<ns0:login xmlns:ns0="train_webservice">
+<ns0:username>Mellah</ns0:username>
+<ns0:password>1234</ns0:password>
+</ns0:login>
+</soap-env:Body>
+</soap-env:Envelope>
+```
+
+### Reponse si aucune erreur
+
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<soap11env:Envelope xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="train_webservice">
+    <soap11env:Body>
+        <tns:loginResponse>
+            <tns:loginResult>token</tns:loginResult>
+        </tns:loginResponse>
+    </soap11env:Body>
+</soap11env:Envelope>
+```
+
+## Train Search 
+
+Pour faire une recherche de Train disponible
+
+Dans Postman, dans l'onglet 'Headers', on ajoute un paramètre 'Content-type = text/xml".  Dans l'onglet 'Body', on coche 'raw' et le format 'XML'. Puis, on remplit le body:
+
+### Appel
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+<soap-env:Body>
+    <ns0:train_search xmlns:ns0="train_webservice">
+        <ns0:token>token</ns0:token>
+        <ns0:GareDepart></ns0:GareDepart>
+        <ns0:GareArrivee></ns0:GareArrivee>
+        <ns0:DateDepart></ns0:DateDepart>
+        <ns0:DateArrivee></ns0:DateArrivee>
+        <ns0:NombreTicket></ns0:NombreTicket>
+        <ns0:Classe> </ns0:Classe>
+    </ns0:train_search>
+    </soap-env:Body>
+</soap-env:Envelope>
+```
+
+### Reponse si aucune erreur
+
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<soap11env:Envelope xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="train_webservice">
+    <soap11env:Body>
+        <tns:train_searchResponse>
+            <tns:train_searchResult>data_en_format_json</tns:train_searchResult>
+        </tns:train_searchResponse>
+    </soap11env:Body>
+</soap11env:Envelope>
+```
+
+## Train Booking 
+
+Pour faire une recherche de Train disponible
+
+Dans Postman, dans l'onglet 'Headers', on ajoute un paramètre 'Content-type = text/xml".  Dans l'onglet 'Body', on coche 'raw' et le format 'XML'. Puis, on remplit le body:
+
+### Appel
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+<soap-env:Body><ns0:train_booking xmlns:ns0="train_webservice">
+    <ns0:token>token</ns0:token>
+    <ns0:typeTravel>oneWay/roundTrip</ns0:typeTravel>
+    <ns0:trainAway>5269</ns0:trainAway>
+    <ns0:Classe>Standard</ns0:Classe>
+    <ns0:TypeTicket>flexible</ns0:TypeTicket>
+    <ns0:NombreTicket>4</ns0:NombreTicket>
+    </ns0:train_booking>
+    </soap-env:Body>
+</soap-env:Envelope>
+```
+
+### Reponse si aucune erreur
+
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<soap11env:Envelope xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tns="train_webservice">
+    <soap11env:Body>
+        <tns:train_bookingResponse>
+            <tns:train_bookingResult>Successful reservation</tns:train_bookingResult>
+        </tns:train_bookingResponse>
+    </soap11env:Body>
+</soap11env:Envelope>
+```

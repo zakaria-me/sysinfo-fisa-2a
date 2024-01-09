@@ -1,5 +1,6 @@
 # Ignore virtual environment
 djangoenv/
+wsproject/
 # Ignore compiled Python files
 __pycache__/
 *.pyc
@@ -34,3 +35,17 @@ local_settings.py
 # Ignore IDE-specific files and directories
 .idea/
 .vscode/
+soap-api/soapenv/Scripts/activate
+soap-api/soapenv/Scripts/activate.bat
+soap-api/soapenv/Scripts/Activate.ps1
+soap-api/soapenv/Scripts/deactivate.bat
+soap-api/soapenv/Scripts/f2py.exe
+soap-api/soapenv/Scripts/flask.exe
+soap-api/soapenv/Scripts/normalizer.exe
+soap-api/soapenv/Scripts/pip.exe
+soap-api/soapenv/Scripts/pip3.11.exe
+soap-api/soapenv/Scripts/pip3.exe
+soap-api/soapenv/Scripts/python.exe
+soap-api/soapenv/Scripts/pythonw.exe
+soap-api/soapenv/Scripts/sort_wsdl.exe
+sandbox/

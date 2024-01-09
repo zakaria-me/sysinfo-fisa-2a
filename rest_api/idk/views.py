@@ -107,7 +107,7 @@ class TrainViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({"detail": "No available seats."}, status=status.HTTP_204_NO_CONTENT)
         
         seat_type = request.data.get('seat_type')
-        reservation_quantity = request.data.get('quantity')
+        reservation_quantity = int(request.data.get('quantity'))
         ticket_type = request.data.get('ticket_type')
 
         if not seat_type:
