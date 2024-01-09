@@ -1,0 +1,285 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MDCCARDINALE/REST/2.0.0
+info:
+  description: This is a simple API
+  version: 2.0.0
+  title: Simple Train reservation API
+  contact:
+    email: maxime.cardinale@ensiie.fr
+tags:
+  - name: train
+    description: Everything about your Trains
+  - name: user
+    description: Operations about user
+  - name: reservation
+    description: Operations about reservation
+
+paths:
+
+  /trains:
+    get:
+      tags:
+        - trains
+      summary: List all trains
+      operationId: getTrains
+      parameters:
+        - name: departure_date
+          in: query
+          description: departure date
+          required: false
+          schema:
+            type: string
+        - name: arrival_date
+          in: query
+          description: arrival date
+          required: false
+          schema:
+            type: string
+        - name: seats_number
+          in: query
+          description: number of seats
+          required: false
+          schema:
+            type: integer
+        - name: first_class_seats
+          in: query
+          description: number of first class seats
+          required: false
+          schema:
+            type: integer
+        - name: business_class_seats
+          in: query
+          description: number of business class seats
+          required: false
+          schema:
+            type: integer
+        - name: standard_class_seats
+          in: query
+          description: number of standard class seats
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A paged array of trains
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                  previous:
+                    type: string
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Train'
+        '400':
+          description: Invalid status value
+
+  /trains/{trainId}:
+    get:
+      tags:
+        - trains
+      summary: Find train by ID
+      description: Returns a single train
+      operationId: getTrainById
+      parameters:
+        - name: trainId
+          in: path
+          description: ID of train to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Train'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Train not found
+
+  /trains/{trainId}/seats_reservation/:
+    post:
+      tags:
+        - trains
+      summary: Reserve seats in train
+      description: Reserve seats in train
+      operationId: reserveSeats
+      parameters:
+        - name: trainId
+          in: path
+          description: ID of train to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                seat_type:
+                  type: string
+                  enum:
+                    - first
+                    - standard
+                    - business
+                ticket_type:
+                  type: string
+                  enum:
+                    - flexible
+                    - non_flexible
+
+                quantity:
+                  type: integer
+                  minimum: 1
+                  required:
+                    - seat_type
+                    - ticket_type
+                    - quantity
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  seat_type:
+                    type: string
+                    enum:
+                      - first
+                      - standard
+                      - business
+                  ticket_type:
+                    type: string
+                    enum:
+                      - flexible
+                      - non_flexible
+                  quantity:
+                    type: integer
+                    minimum: 1
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Train not found
+
+  /station:
+    get:
+      tags:
+        - station
+      summary: List all stations
+      operationId: getStations
+      parameters:
+        - name: name
+          in: query
+          description: name of the station
+          required: false
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: city of the station
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A paged array of stations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                  previous:
+                    type: string
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Station'
+        '400':
+          description: Invalid status value
+components:
+  schemas:
+    Train:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        departure_station:
+          $ref: '#/components/schemas/Station'
+        arrival_station:
+          $ref: '#/components/schemas/Station'
+        first_class_seats:
+          type: object
+          properties:
+            quantity:
+              type: integer
+            reserved:
+              type: integer
+            fixed_price:
+              type: number
+            flexible_price:
+              type: number
+        business_class_seats:
+          type: object
+          properties:
+            quantity:
+              type: integer
+            reserved:
+              type: integer
+            fixed_price:
+              type: number
+            flexible_price:
+              type: number
+        standard_class_seats:
+          type: object
+          properties:
+            quantity:
+              type: integer
+            reserved:
+              type: integer
+            fixed_price:
+              type: number
+            flexible_price:
+              type: number
+        departure_date:
+          type: string
+          format: date
+        departure_time:
+          type: string
+          format: time
+        arrival_date:
+          type: string
+          format: date
+        arrival_time:
+          type: string
+          format: time
+    Station:
+      type: object
+      properties:
+        name:
+          type: string
+        city:
+          type: string
+        postal_code:
+          type: string
