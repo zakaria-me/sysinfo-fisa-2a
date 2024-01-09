@@ -1,0 +1,696 @@
+{
+	"info": {
+		"_postman_id": "5d7ed5b3-6d35-441e-93f6-406d45c7346e",
+		"name": "SYSINFO_AUTO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29506460",
+		"_collection_link": "https://planetary-equinox-298377.postman.co/workspace/New-Team-Workspace~6f92133a-f30d-477e-9d87-96bc15d4c6e5/collection/29506460-5d7ed5b3-6d35-441e-93f6-406d45c7346e?action=share&source=collection_link&creator=29506460"
+	},
+	"item": [
+		{
+			"name": "PROJET",
+			"item": [
+				{
+					"name": "REST",
+					"item": [
+						{
+							"name": "Liste des trains",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Vérifie si le statut de la réponse est 200 OK",
+											"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Vérifie si la réponse est au format JSON",
+											"pm.test(\"La réponse est au format JSON\", function () {",
+											"  pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+											"});",
+											"",
+											"// Vérifie si la réponse contient des données",
+											"pm.test(\"La réponse contient des données\", function () {",
+											"  pm.response.to.have.jsonBody();",
+											"});",
+											"",
+											"",
+											"pm.test(\"La réponse contient les champs attendus\", function () {",
+											"  const responseBody = pm.response.json();",
+											"  pm.expect(responseBody).to.have.property(\"count\");",
+											"  pm.expect(responseBody).to.have.property(\"next\");",
+											"  pm.expect(responseBody).to.have.property(\"previous\");",
+											"  pm.expect(responseBody).to.have.property(\"results\");",
+											"});",
+											"",
+											"pm.test(\"Les détails des trains sont corrects\", function () {",
+											"  const trains = pm.response.json().results;",
+											"  for (let train of trains) {",
+											"    pm.expect(train).to.have.property(\"id\");",
+											"    pm.expect(train).to.have.property(\"departure_station\");",
+											"    pm.expect(train).to.have.property(\"arrival_station\");",
+											"    // Assure-toi que les autres propriétés sont présentes et correctes",
+											"  }",
+											"});",
+											"",
+											"",
+											"// Vérifie si la réponse contient des trains (nombre minimum de résultats attendus)",
+											"pm.test(\"La réponse contient au moins un train\", function () {",
+											"  pm.expect(pm.response.json().results.length).to.be.above(0);",
+											"  // Tu peux ajuster la valeur de .length selon tes attentes",
+											"});",
+											"",
+											"// Vérifie si les trains ont les détails appropriés (par exemple: ID, date de départ)",
+											"pm.test(\"Les détails des trains sont présents\", function () {",
+											"  const trains = pm.response.json().results;",
+											"  for (let train of trains) {",
+											"    pm.expect(train).to.have.property(\"id\");",
+											"    pm.expect(train).to.have.property(\"departure_date\");",
+											"    // Ajoute d'autres assertions pour d'autres détails spécifiques si nécessaire",
+											"  }",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/trains/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"trains",
+										""
+									],
+									"query": [
+										{
+											"key": "departure_date",
+											"value": "2021-10-10T10:00:00Z",
+											"disabled": true
+										},
+										{
+											"key": "arrival_date",
+											"value": "2021-10-10T12:00:00Z",
+											"disabled": true
+										},
+										{
+											"key": "first_class_seats",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "business_class_seats",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "standard_class_seats",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "arrival_station",
+											"value": "Santeuil - Le Perchay",
+											"disabled": true
+										},
+										{
+											"key": "seats_number",
+											"value": "201",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Un train",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Statut de la réponse pour /trains/244 est 200 OK\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /trains/244 est au format JSON\", function () {",
+											"  pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /trains/244 contient des données\", function () {",
+											"  pm.response.to.have.jsonBody();",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /trains/244 contient les champs attendus\", function () {",
+											"  const responseBody = pm.response.json();",
+											"  pm.expect(responseBody).to.have.property(\"id\");",
+											"  pm.expect(responseBody).to.have.property(\"departure_station\");",
+											"  pm.expect(responseBody).to.have.property(\"arrival_station\");",
+											"});",
+											"",
+											"pm.test(\"Vérification de l'ID pour /trains/244\", function () {",
+											"  const responseBody = pm.response.json();",
+											"  pm.expect(responseBody.id).to.equal(244);",
+											"});",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/trains/1221",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"trains",
+										"1221"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Liste des stations",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Statut de la réponse pour /stations?city=Évry-Courcouronnes est 200 OK\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /stations?city=Évry-Courcouronnes est au format JSON\", function () {",
+											"  pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /stations?city=Évry-Courcouronnes contient des données\", function () {",
+											"  pm.response.to.have.jsonBody();",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /stations?city=Évry-Courcouronnes contient les champs attendus\", function () {",
+											"  const responseBody = pm.response.json();",
+											"  pm.expect(responseBody).to.have.property(\"count\");",
+											"  pm.expect(responseBody).to.have.property(\"next\");",
+											"  pm.expect(responseBody).to.have.property(\"previous\");",
+											"  pm.expect(responseBody).to.have.property(\"results\");",
+											"});",
+											"",
+											"pm.test(\"Les stations retournées sont toutes de la ville 'Évry-Courcouronnes'\", function () {",
+											"  const stations = pm.response.json().results;",
+											"  for (let station of stations) {",
+											"    pm.expect(station.city.toLowerCase()).to.equal('évry-courcouronnes')",
+											"    // Vérifie que toutes les stations retournées ont 'Évry-Courcouronnes' comme ville",
+											"  }",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/stations?city=Évry-Courcouronnes",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"stations"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "city",
+											"value": "Évry-Courcouronnes"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Réserver des places",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Statut de la réponse pour /trains/2846/seats_reservation/ est 200 OK\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /trains/2846/seats_reservation/ est au format JSON\", function () {",
+											"  pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /trains/2846/seats_reservation/ contient des données\", function () {",
+											"  pm.response.to.have.jsonBody();",
+											"});",
+											"// VERIF DIMINUTION NB PLACES",
+											"pm.test(\"Vérification de l'augmentation du nombre de place réservées.\", function () {",
+											"    const requestParams = {",
+											"        url: 'http://127.0.0.1:8000/trains/2281',",
+											"        method: 'GET',",
+											"        header: {",
+											"            'Content-Type': 'application/json',",
+											"        },",
+											"    };",
+											"    pm.sendRequest(requestParams, function (err, res) {",
+											"        if (err) {",
+											"            console.error(err);",
+											"        } else {",
+											"            const responseBody = res.json();",
+											"            ",
+											"            const updatedReservedFirstClassSeats = responseBody.first_class_seats.reserved;",
+											"            const initialReservedFirstClassSeats = pm.environment.get(\"initialReservedFirstClassSeats\");",
+											"            const quantity = pm.environment.get(\"reservationQuantity\");",
+											"            const expectedReservedNumber = initialReservedFirstClassSeats + quantity;",
+											"",
+											"            pm.expect(updatedReservedFirstClassSeats).to.be.equal(expectedReservedNumber);",
+											"        }",
+											"    });",
+											"});",
+											"",
+											"pm.test(\"Vérification de la cohérence du prix\", function () {",
+											"  const initialFlexiblePrice = pm.environment.get(\"initialFlexiblePrice\");",
+											"  const price = pm.response.json().total_price;",
+											"  const quantity = pm.environment.get(\"reservationQuantity\")",
+											"  const expectedPrice = initialFlexiblePrice * quantity",
+											"  pm.expect(price).to.be.equal(expectedPrice)",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Define the URL for the initial request",
+											"const initialRequestUrl = 'http://127.0.0.1:8000/trains/2281';",
+											"",
+											"// Define the request parameters",
+											"const requestParams = {",
+											"    url: initialRequestUrl,",
+											"    method: 'GET',",
+											"    header: {",
+											"        'Content-Type': 'application/json',",
+											"    },",
+											"};",
+											"",
+											"// Send the request to retrieve initialFirstClassSeats and initialFlexiblePrice",
+											"pm.sendRequest(requestParams, function (err, res) {",
+											"    if (err) {",
+											"        console.error(err);",
+											"    } else {",
+											"        const responseBody = res.json();",
+											"        // Store the retrieved values in environment variables for later use",
+											"        pm.environment.set(\"initialReservedFirstClassSeats\", responseBody.first_class_seats.reserved);",
+											"        pm.environment.set(\"initialFlexiblePrice\", responseBody.first_class_seats.flexible_price);",
+											"    }",
+											"});",
+											"",
+											"const requestBody = pm.request.body;",
+											"// Check if the request body exists and is in JSON format",
+											"if (requestBody && requestBody.hasOwnProperty('mode') && requestBody.mode === 'raw') {",
+											"    try {",
+											"        // Parse the raw request body JSON",
+											"        const bodyJson = JSON.parse(requestBody.raw);",
+											"",
+											"        // Retrieve the 'quantity' parameter from the parsed JSON",
+											"        const quantity = bodyJson.quantity;",
+											"",
+											"        // Set the retrieved 'quantity' as an environment variable for later use",
+											"        pm.environment.set('reservationQuantity', quantity);",
+											"    } catch (error) {",
+											"        console.error('Error parsing the request body JSON:', error);",
+											"    }",
+											"} else {",
+											"    console.error('Invalid or missing request body');",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"seat_type\": \"first\",\n    \"ticket_type\": \"flexible\",\n    \"quantity\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/trains/2281/seats_reservation/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"trains",
+										"2281",
+										"seats_reservation",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Liste des stations",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /stations est au format JSON\", function () {",
+											"  pm.response.to.have.header(\"Content-Type\", \"application/json\");",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /stations contient des données\", function () {",
+											"  pm.response.to.have.jsonBody();",
+											"});",
+											"",
+											"pm.test(\"La réponse pour /stations contient les champs attendus\", function () {",
+											"  const responseBody = pm.response.json();",
+											"  pm.expect(responseBody).to.have.property(\"count\");",
+											"  pm.expect(responseBody).to.have.property(\"next\");",
+											"  pm.expect(responseBody).to.have.property(\"previous\");",
+											"  pm.expect(responseBody).to.have.property(\"results\");",
+											"});",
+											"",
+											"pm.test(\"Les stations retournées contiennent les propriétés attendues\", function () {",
+											"  const stations = pm.response.json().results;",
+											"  ",
+											"  for (let station of stations) {",
+											"    pm.expect(station).to.have.property(\"name\");",
+											"    pm.expect(station).to.have.property(\"city\");",
+											"    pm.expect(station).to.have.property(\"postal_code\");",
+											"  }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:8000/stations/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"stations",
+										""
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Abancourt",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "basic",
+						"basic": [
+							{
+								"key": "password",
+								"value": "123AZEaze",
+								"type": "string"
+							},
+							{
+								"key": "username",
+								"value": "maxime",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "SOAP",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<?xml version='1.0' encoding='utf-8'?>\n<soap-env:Envelope \nxmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n<soap-env:Body>\n<ns0:login xmlns:ns0=\"train_webservice\">\n<ns0:username>Mellah</ns0:username>\n<ns0:password>1234</ns0:password>\n</ns0:login>\n</soap-env:Body>\n</soap-env:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8009/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8009",
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Train Search",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<?xml version='1.0' encoding='utf-8'?>\n<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n<soap-env:Body>\n    <ns0:train_search xmlns:ns0=\"train_webservice\">\n        <ns0:token>51c09ad7f53e8961ba4656bed744da87</ns0:token>\n        <ns0:GareDepart>Fontainebleau - Avon</ns0:GareDepart>\n        <ns0:GareArrivee></ns0:GareArrivee>\n        <ns0:DateDepart></ns0:DateDepart>\n        <ns0:DateArrivee></ns0:DateArrivee>\n        <ns0:NombreTicket></ns0:NombreTicket>\n        <ns0:Classe> </ns0:Classe>\n    </ns0:train_search>\n    </soap-env:Body>\n</soap-env:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8009/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8009",
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Train Booking",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<?xml version='1.0' encoding='utf-8'?>\n<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n<soap-env:Body><ns0:train_booking xmlns:ns0=\"train_webservice\">\n    <ns0:token>5f99835bc0cae3b49c7135a44b682bc2</ns0:token>\n    <ns0:typeTravel>oneWay</ns0:typeTravel>\n    <ns0:trainAway>5269</ns0:trainAway>\n    <ns0:Classe>Standard</ns0:Classe>\n    <ns0:TypeTicket>flexible</ns0:TypeTicket>\n    <ns0:NombreTicket>4</ns0:NombreTicket>\n    </ns0:train_booking>\n    </soap-env:Body>\n</soap-env:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<?xml version='1.0' encoding='utf-8'?>\n<soap-env:Envelope xmlns:soap-env=\"http://schemas.xmlsoap.org/soap/envelope/\">\n<soap-env:Body>\n    <ns0:create_user xmlns:ns0=\"train_webservice\">\n        <ns0:username>Mellah</ns0:username>\n        <ns0:password>12346</ns0:password>\n        </ns0:create_user></soap-env:Body>\n        </soap-env:Envelope>",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8009/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8009",
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
