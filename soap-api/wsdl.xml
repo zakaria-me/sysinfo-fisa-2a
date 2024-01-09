@@ -1,0 +1,169 @@
+<wsdl:definitions targetNamespace="train_webservice" name="Application">
+<wsdl:types>
+<xs:schema targetNamespace="train_webservice" elementFormDefault="qualified">
+<xs:complexType name="create_user">
+<xs:sequence>
+<xs:element name="username" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="password" type="xs:string" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="create_userResponse">
+<xs:sequence>
+<xs:element name="create_userResult" type="xs:string" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="login">
+<xs:sequence>
+<xs:element name="username" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="password" type="xs:string" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="loginResponse">
+<xs:sequence>
+<xs:element name="loginResult" type="xs:string" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="train_booking">
+<xs:sequence>
+<xs:element name="token" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="typeTravel" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="trainAway" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="trainRound" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="Classe" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="TypeTicket" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="NombreTicket" type="xs:string" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="train_bookingResponse">
+<xs:sequence>
+<xs:element name="train_bookingResult" type="xs:string" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="train_search">
+<xs:sequence>
+<xs:element name="token" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="GareDepart" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="GareArrivee" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="DateDepart" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="DateArrivee" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="NombreTicket" type="xs:string" minOccurs="0" nillable="true"/>
+<xs:element name="Classe" type="xs:string" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="train_searchResponse">
+<xs:sequence>
+<xs:element name="train_searchResult" type="xs:string" minOccurs="0" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="create_user" type="tns:create_user"/>
+<xs:element name="create_userResponse" type="tns:create_userResponse"/>
+<xs:element name="login" type="tns:login"/>
+<xs:element name="loginResponse" type="tns:loginResponse"/>
+<xs:element name="train_booking" type="tns:train_booking"/>
+<xs:element name="train_bookingResponse" type="tns:train_bookingResponse"/>
+<xs:element name="train_search" type="tns:train_search"/>
+<xs:element name="train_searchResponse" type="tns:train_searchResponse"/>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="login">
+<wsdl:part name="login" element="tns:login"/>
+</wsdl:message>
+<wsdl:message name="loginResponse">
+<wsdl:part name="loginResponse" element="tns:loginResponse"/>
+</wsdl:message>
+<wsdl:message name="create_user">
+<wsdl:part name="create_user" element="tns:create_user"/>
+</wsdl:message>
+<wsdl:message name="create_userResponse">
+<wsdl:part name="create_userResponse" element="tns:create_userResponse"/>
+</wsdl:message>
+<wsdl:message name="train_search">
+<wsdl:part name="train_search" element="tns:train_search"/>
+</wsdl:message>
+<wsdl:message name="train_searchResponse">
+<wsdl:part name="train_searchResponse" element="tns:train_searchResponse"/>
+</wsdl:message>
+<wsdl:message name="train_booking">
+<wsdl:part name="train_booking" element="tns:train_booking"/>
+</wsdl:message>
+<wsdl:message name="train_bookingResponse">
+<wsdl:part name="train_bookingResponse" element="tns:train_bookingResponse"/>
+</wsdl:message>
+<wsdl:service name="LoginService">
+<wsdl:port name="Application" binding="tns:Application">
+<wsdlsoap11:address location="http://localhost:8009/"/>
+</wsdl:port>
+</wsdl:service>
+<wsdl:service name="CreateUserService">
+<wsdl:port name="Application" binding="tns:Application">
+<wsdlsoap11:address location="http://localhost:8009/"/>
+</wsdl:port>
+</wsdl:service>
+<wsdl:service name="TrainSearchService">
+<wsdl:port name="Application" binding="tns:Application">
+<wsdlsoap11:address location="http://localhost:8009/"/>
+</wsdl:port>
+</wsdl:service>
+<wsdl:service name="TrainBookingService">
+<wsdl:port name="Application" binding="tns:Application">
+<wsdlsoap11:address location="http://localhost:8009/"/>
+</wsdl:port>
+</wsdl:service>
+<wsdl:portType name="Application">
+<wsdl:operation name="login" parameterOrder="login">
+<wsdl:input name="login" message="tns:login"/>
+<wsdl:output name="loginResponse" message="tns:loginResponse"/>
+</wsdl:operation>
+<wsdl:operation name="create_user" parameterOrder="create_user">
+<wsdl:input name="create_user" message="tns:create_user"/>
+<wsdl:output name="create_userResponse" message="tns:create_userResponse"/>
+</wsdl:operation>
+<wsdl:operation name="train_search" parameterOrder="train_search">
+<wsdl:input name="train_search" message="tns:train_search"/>
+<wsdl:output name="train_searchResponse" message="tns:train_searchResponse"/>
+</wsdl:operation>
+<wsdl:operation name="train_booking" parameterOrder="train_booking">
+<wsdl:input name="train_booking" message="tns:train_booking"/>
+<wsdl:output name="train_bookingResponse" message="tns:train_bookingResponse"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="Application" type="tns:Application">
+<wsdlsoap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="login">
+<wsdlsoap11:operation soapAction="login" style="document"/>
+<wsdl:input name="login">
+<wsdlsoap11:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="loginResponse">
+<wsdlsoap11:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="create_user">
+<wsdlsoap11:operation soapAction="create_user" style="document"/>
+<wsdl:input name="create_user">
+<wsdlsoap11:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="create_userResponse">
+<wsdlsoap11:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="train_search">
+<wsdlsoap11:operation soapAction="train_search" style="document"/>
+<wsdl:input name="train_search">
+<wsdlsoap11:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="train_searchResponse">
+<wsdlsoap11:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="train_booking">
+<wsdlsoap11:operation soapAction="train_booking" style="document"/>
+<wsdl:input name="train_booking">
+<wsdlsoap11:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="train_bookingResponse">
+<wsdlsoap11:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+</wsdl:definitions>

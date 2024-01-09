@@ -48,3 +48,4 @@ soap-api/soapenv/Scripts/pip3.exe
 soap-api/soapenv/Scripts/python.exe
 soap-api/soapenv/Scripts/pythonw.exe
 soap-api/soapenv/Scripts/sort_wsdl.exe
+sandbox/
