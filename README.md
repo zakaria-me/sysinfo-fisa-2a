@@ -66,7 +66,7 @@ python soap-api/raw-api/front-client.py
 
 4 	Test with Web service Client (instead of using Eclipse's Web service Explorer)  	2/2
 
-5 	Work with complex data type (class, table, etc.) 	                                1/2
+5 	Work with complex data type (class, table, etc.) 	                                2/2
 
 6 	Work with database (in text file, xml, in mysql, etc.) 	                            2/2
 
@@ -79,6 +79,7 @@ python soap-api/raw-api/front-client.py
 # Documentation de l'API
 
 Le lien vers la documentation de l'API (réalisée avec Swagger) est disponible à ce lien https://app.swaggerhub.com/apis-docs/MDCCARDINALE/REST/2.0.0
+Si le lien n'est plus fonctionnel, vous pouvez retrouver le fichier swagger source dans le dossier rest_api/swagger.yaml
 
 # Test de l'API REST avec POSTMAN
 
