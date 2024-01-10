@@ -11,7 +11,8 @@ The project contains three services:
 - A SOAP API implemented with spyne
 - A Web Client written in flask
 
-Note: the project uses the ports 8009, 8000 and 5000
+Note: the project uses the ports 8009 (SOAP API), 8000(REST API) and 5000(Web Client)
+
 Make sure they are available.
 
 Initialize a virtual environement:
@@ -70,9 +71,9 @@ python soap-api/raw-api/front-client.py
 
 6 	Work with database (in text file, xml, in mysql, etc.) 	                            2/2
 
-7 	Postman 	                                                                        2/2
+7 	Postman 	                                                                        1.5/2
 
-8 	OpenAPI 	                                                                        3/3
+8 	OpenAPI 	                                                                        2/3
 
 9 	BPMS 	                                                                            0/5
 
