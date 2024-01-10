@@ -14,11 +14,10 @@ wsdl_url = 'http://localhost:8009/?wsdl'
 # Create a client using the WSDL
 client = Client(wsdl_url)
 
-# Call the 'say_hello' service
 response = client.service.login('Mellah', 1234)
 print(response)
-r = client.service.train_booking(response, 'oneWay', '5269', None, 'Standard', 'flexible', '4')
-print(response)
+# r = client.service.train_booking(response, 'oneWay', '5269', None, 'Standard', 'flexible', '4')
+# print(response)
 
 
 url = 'http://localhost:8009/'
