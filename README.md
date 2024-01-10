@@ -80,6 +80,10 @@ python soap-api/raw-api/front-client.py
 
 Le lien vers la documentation de l'API (réalisée avec Swagger) est disponible à ce lien https://app.swaggerhub.com/apis-docs/MDCCARDINALE/REST/2.0.0
 
+# Test de l'API REST avec POSTMAN
+
+Vous pouvez trouver la collection POSTMAN associée dans le dossier postman/
+
 # Test de l'API SOAP avec POSTMAN
 
 
